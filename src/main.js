@@ -4,11 +4,27 @@
 var image = document.querySelector(".poster-img");
 var title = document.querySelector(".poster-title");
 var quote = document.querySelector(".poster-quote");
+
+//buttons
 var savePosterButton = document.querySelector(".save-poster");
 var showSavedButton = document.querySelector(".show-saved");
 var showRandomButton = document.querySelector(".show-random");
 var showFormButton = document.querySelector(".show-form");
-// we've provided you with some data to work with 👇
+var showMainButton = document.querySelector(".show-main");
+var backToMainButton = document.querySelector(".back-to-main");
+var showMyPosterButton = document.querySelector(".make-poster")
+
+//website pages
+var mainPoster = document.querySelector(".main-poster");
+var posterForm = document.querySelector(".poster-form");
+var savedPosters = document.querySelector(".saved-posters");
+
+//form inputs
+var userURL = document.querySelector("#poster-image-url");
+var userTitle = document.querySelector("#poster-title");
+var userQuote = document.querySelector("#poster-quote");
+
+
 var images = [
   "./assets/bees.jpg",
   "./assets/bridge.jpg",
@@ -106,34 +122,31 @@ var quotes = [
   "Each person must live their life as a model for others.",
   "A champion is defined not by their wins but by how they can recover when they fall."
 ];
-// premade variables
 var savedPosters = [];
 var currentPoster
 
 // event listeners go here 👇
+window.addEventListener('load', displayPoster);
 showRandomButton.addEventListener('click', displayPoster);
+showFormButton.addEventListener('click', displayForm);
+showMainButton.addEventListener('click', takeMeBack);
+showMyPosterButton.addEventListener('click', showMyPoster);
 
-window.onload = (event) => {
-  displayPoster();
-};
+function displayForm() {
+    posterForm.classList.remove("hidden");
+    mainPoster.classList.add("hidden");
+}
+
+function takeMeBack() {
+  mainPoster.classList.remove("hidden");
+  posterForm.classList.add("hidden");
+}
+
 // functions and event handlers go here 👇
-// (we've provided one for you to get you started)!
 function getRandomIndex(array) {
   console.log(array);
   return Math.floor(Math.random() * array.length);
 }
-
-//
-
-// Iteration Zero
-// When a page loads, we should see a poster
-// with a randomly selected image, title, and quote
-// Every time the user clicks the Show Randowm Poster button, a new
-// random poster is displayed
-//assigns the referenced image, title, and quote variables
-//to randomized instance variables
-//and displays them in the HTML
-// write a function to display newPoster
 
  function displayPoster() {
    var newPoster = new Poster(images[getRandomIndex(images)], titles[getRandomIndex(titles)], quotes[getRandomIndex(quotes)])
@@ -141,5 +154,15 @@ function getRandomIndex(array) {
    title.innerText = newPoster.title;
    quote.innerText = newPoster.quote;
    currentPoster = newPoster
-   console.log(newPoster)
  }
+
+// iteration 1
+function showMyPoster(userURL, userTitle, userQuote) {
+  var userPoster = new Poster(userURL, userTitle, userQuote)
+  image.src = userPoster.imageURL;
+  title.innerText = userPoster.title;
+  quote.innerText = userPoster.quote;
+  savedPosters.push(userPoster)
+}
+
+  //save current poster to reference by currentPoster.id and display in the savedPosters array
