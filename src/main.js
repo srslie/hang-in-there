@@ -24,7 +24,6 @@ var userURL = document.querySelector("#poster-image-url");
 var userTitle = document.querySelector("#poster-title");
 var userQuote = document.querySelector("#poster-quote");
 
-
 var images = [
   "./assets/bees.jpg",
   "./assets/bridge.jpg",
@@ -122,6 +121,7 @@ var quotes = [
   "Each person must live their life as a model for others.",
   "A champion is defined not by their wins but by how they can recover when they fall."
 ];
+
 var savedPosters = [];
 var currentPoster
 
@@ -148,21 +148,27 @@ function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
 
- function displayPoster() {
-   var newPoster = new Poster(images[getRandomIndex(images)], titles[getRandomIndex(titles)], quotes[getRandomIndex(quotes)])
-   image.src = newPoster.imageURL;
-   title.innerText = newPoster.title;
-   quote.innerText = newPoster.quote;
-   currentPoster = newPoster
+function getRandomIndex(array) {
+  console.log(array);
+  return Math.floor(Math.random() * array.length);
+}
+
+function displayPoster() {
+  var newPoster = new Poster(images[getRandomIndex(images)], titles[getRandomIndex(titles)], quotes[getRandomIndex(quotes)])
+  image.src = newPoster.imageURL;
+  title.innerText = newPoster.title;
+  quote.innerText = newPoster.quote;   
+  currentPoster = newPoster;
  }
 
-// iteration 1
 function showMyPoster(userURL, userTitle, userQuote) {
-  var userPoster = new Poster(userURL, userTitle, userQuote)
+  var userPoster = new Poster(userURL, userTitle, userQuote);
   image.src = userPoster.imageURL;
   title.innerText = userPoster.title;
   quote.innerText = userPoster.quote;
-  savedPosters.push(userPoster)
+  savedPosters.push(userPoster);
 }
 
   //save current poster to reference by currentPoster.id and display in the savedPosters array
+
+
