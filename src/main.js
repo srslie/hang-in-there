@@ -146,11 +146,17 @@ function displayPoster() {
   currentPoster = newPoster;
  }
 
-function showMyPoster(userURL, userTitle, userQuote) {
-  var userPoster = new Poster(userURL, userTitle, userQuote);
+function showMyPoster() {
+  event.preventDefault();
+  var userPoster = new Poster(userURL.value, userTitle.value, userQuote.value);
   image.src = userPoster.imageURL;
   title.innerText = userPoster.title;
   quote.innerText = userPoster.quote;
+  posterForm.classList.add("hidden");
+  mainPoster.classList.remove("hidden");
+  images.push(userURL.value);
+  titles.push(userTitle.value);
+  quotes.push(userQuote.value);
 }
 
 function savePoster() {
