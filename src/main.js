@@ -160,8 +160,30 @@ function showMyPoster() {
 }
 
 function savePoster() {
-  savedPosters.push(currentPoster);
+  var notTrue = true;
+  if (savedPosters.length > 0) {
+      for (var i = 0; i < savedPosters.length; i++) {
+        if (savedPosters[i].id === currentPoster.id) {
+          notTrue = false;
+        }
+      }
+    }
+  if (notTrue) {
+    savedPosters.push(currentPoster);
+  }
 }
+
+// for loop through the savedPosters arrays
+// check if the object is === to the same object
+// do not save poster
+
+// function saveDynamicDataToFile() {
+//
+//         var userInput = document.getElementById("myText").value;
+//
+//         var blob = new Blob([userInput], { type: "text/plain;charset=utf-8" });
+//         saveAs(blob, "dynamic.txt");
+//     }
 
 function displayForm() {
   posterForm.classList.remove("hidden");
