@@ -1,3 +1,4 @@
+
 // query selector variables go here 👇
 var image = document.querySelector(".poster-img");
 var title = document.querySelector(".poster-title");
@@ -15,7 +16,10 @@ var showMyPosterButton = document.querySelector(".make-poster")
 //website pages
 var mainPoster = document.querySelector(".main-poster");
 var posterForm = document.querySelector(".poster-form");
-var posterCollection = document.querySelector(".saved-posters");
+var postersCollection = document.querySelector(".saved-posters");
+
+//saved poster collection
+var collectionGrid = document.querySelector(".saved-posters-grid")
 
 //form inputs
 var userURL = document.querySelector("#poster-image-url");
@@ -80,7 +84,7 @@ var titles = [
   "wisdom"
 ];
 var quotes = [
-  "Don’t downgrade your dream just to fit your reality, upgrade your conviction to match your destiny.",
+  "Don't downgrade your dream just to fit your reality, upgrade your conviction to match your destiny.",
   "You are braver than you believe, stronger than you seem and smarter than you think.",
   "You are confined only by the walls you build yourself.",
   "The one who has confidence gains the confidence of others.",
@@ -107,7 +111,7 @@ var quotes = [
   "It is never too late to be what you might have been.",
   "Happiness often sneaks in through a door you didn't know you left open.",
   "We must be willing to let go of the life we planned so as to have the life that is waiting for us.",
-  "Never limit yourself because of others’ limited imagination; never limit others because of your own limited imagination.",
+  "Never limit yourself because of others' limited imagination; never limit others because of your own limited imagination.",
   "Be the change that you wish to see in the world.",
   "Let us make our future now, and let us make our dreams tomorrow's reality.",
   "You don't always need a plan. Sometimes you just need to breathe, trust, let go, and see what happens.",
@@ -119,66 +123,91 @@ var quotes = [
   "Each person must live their life as a model for others.",
   "A champion is defined not by their wins but by how they can recover when they fall."
 ];
-
 var savedPosters = [];
 var currentPoster
 
 // event listeners go here 👇
 window.addEventListener('load', displayPoster);
 showRandomButton.addEventListener('click', displayPoster);
-showFormButton.addEventListener('click', displayForm);
-showMainButton.addEventListener('click', takeMeBack);
+showFormButton.addEventListener('click', formToggle);
+showMainButton.addEventListener('click', formToggle);
 showMyPosterButton.addEventListener('click', showMyPoster);
-backToMainButton.addEventListener('click', backToMain)
-savePosterButton.addEventListener('click', savePoster)
-showSavedButton.addEventListener('click', showSavedPosters)
+savePosterButton.addEventListener('click', savePoster);
+showSavedButton.addEventListener('click', displaySaved);
+backToMainButton.addEventListener('click', savedToggle);
 
 // functions and event handlers go here 👇
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
 
-function displayPoster() {
-  var newPoster = new Poster(images[getRandomIndex(images)], titles[getRandomIndex(titles)], quotes[getRandomIndex(quotes)])
-  image.src = newPoster.imageURL;
-  title.innerText = newPoster.title;
-  quote.innerText = newPoster.quote;
-  currentPoster = newPoster;
- }
+function toggleHidden(element) {
+  element.classList.toggle("hidden")
+}
 
-function showMyPoster() {
-  event.preventDefault();
-  var userPoster = new Poster(userURL.value, userTitle.value, userQuote.value);
-  image.src = userPoster.imageURL;
-  title.innerText = userPoster.title;
-  quote.innerText = userPoster.quote;
-  posterForm.classList.add("hidden");
-  mainPoster.classList.remove("hidden");
-  images.push(userURL.value);
-  titles.push(userTitle.value);
-  quotes.push(userQuote.value);
+function formToggle() {
+    toggleHidden(posterForm);
+    toggleHidden(mainPoster);
+}
+
+function savedToggle() {
+  toggleHidden(mainPoster);
+  toggleHidden(postersCollection);
 }
 
 function savePoster() {
-  savedPosters.push(currentPoster);
+  var isNotSaved = true
+  if (savedPosters.length) {
+    for (var i = 0; i < savedPosters.length; i++) {
+      if (currentPoster.id === savedPosters[i].id) {
+      isNotSaved = false
+     }
+   }
+ }
+ if (isNotSaved) {
+   savedPosters.push(currentPoster)
+ }
 }
 
-function displayForm() {
-  posterForm.classList.remove("hidden");
-  mainPoster.classList.add("hidden");
-}
+//currentPoster for all of them?
+ function displayPoster() {
+   var newPoster = new Poster(images[getRandomIndex(images)], titles[getRandomIndex(titles)], quotes[getRandomIndex(quotes)])
+//helper function to do this
+   image.src = newPoster.imageURL;
+   title.innerText = newPoster.title;
+   quote.innerText = newPoster.quote;
+   currentPoster = newPoster
+ }
 
-function showSavedPosters() {
-  posterCollection.classList.remove("hidden");
-  mainPoster.classList.add("hidden");
-}
-
-function takeMeBack() {
+ function displaySaved() {
+  savedToggle()
+  collectionGrid.innerHTML = null
+   for (var i = 0; i < savedPosters.length; i++) {
+       collectionGrid.innerHTML += `<article class="mini-poster" id="${savedPosters[i].id}">
+       <img src="${savedPosters[i].imageURL}">
+       <h2>${savedPosters[i].title}</h2>
+       <h4>${savedPosters[i].quote}</h4>
+       </article>`
+  }
+ }
+ 
+// doubleclick event
+//closest
+//event.target
+//event delegation
+//indexOf to got through the array and delete with splice
+//make currentPoster helper function
+function showMyPoster() {
+  event.preventDefault()
+  images.push(userURL.value);
+  titles.push(userTitle.value);
+  quotes.push(userTitle.value);
+  var userPoster = new Poster(userURL.value, userTitle.value, userQuote.value)
+  currentPoster = userPoster
+  //helper function to do this shit
+  image.src = userPoster.imageURL;
+  title.innerText = userPoster.title;
+  quote.innerText = userPoster.quote;
   mainPoster.classList.remove("hidden");
   posterForm.classList.add("hidden");
-}
-
-function backToMain() {
-  mainPoster.classList.remove("hidden");
-  posterCollection.classList.add("hidden");
 }
