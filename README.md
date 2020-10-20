@@ -34,4 +34,4 @@ Also thanks to Mike Duke, Alyssa Bull, Taylor Johnson, Scott Schipke, and the 20
 
 ## PROJECT STATUS
 
-We have made it through Iteration 4! All "required" portions are now complete and working as expected at ![this link](https://srslie.github.io/hang-in-there/)
+We have made it through Iteration 4! All "required" portions are now complete and working as expected at [this link](https://srslie.github.io/hang-in-there/)
