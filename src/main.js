@@ -15,6 +15,7 @@ var collectionGrid = document.querySelector(".saved-posters-grid")
 var userURL = document.querySelector("#poster-image-url");
 var userTitle = document.querySelector("#poster-title");
 var userQuote = document.querySelector("#poster-quote");
+
 var images = [
   "./assets/bees.jpg",
   "./assets/bridge.jpg",
@@ -114,6 +115,7 @@ var quotes = [
 ];
 var savedPosters = [];
 var currentPoster
+
 window.addEventListener('load', displayPoster);
 showRandomButton.addEventListener('click', displayPoster);
 showFormButton.addEventListener('click', formToggle);
@@ -123,29 +125,36 @@ savePosterButton.addEventListener('click', savePoster);
 showSavedButton.addEventListener('click', displaySaved);
 backToMainButton.addEventListener('click', savedToggle);
 collectionGrid.addEventListener('dblclick', deleteSavedPoster);
+
 function toggleHidden(element) {
   element.classList.toggle("hidden");
 }
+
 function formToggle() {
   toggleHidden(posterForm);
   toggleHidden(mainPoster);
 }
+
 function savedToggle() {
   toggleHidden(mainPoster);
   toggleHidden(postersCollection);
 }
+
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
+
 function buildNewDisplay(poster) {
   image.src = poster.imageURL;
   title.innerText = poster.title;
   quote.innerText = poster.quote;
 }
+
 function displayPoster() {
  currentPoster = new Poster(images[getRandomIndex(images)], titles[getRandomIndex(titles)], quotes[getRandomIndex(quotes)]);
  buildNewDisplay(currentPoster);
 }
+
 function showMyPoster() {
   event.preventDefault()
   images.push(userURL.value);
@@ -155,6 +164,7 @@ function showMyPoster() {
   buildNewDisplay(currentPoster);
   formToggle();
 }
+
 function savePoster() {
   var isNotSaved = true;
   if (savedPosters.length) {
@@ -168,6 +178,7 @@ function savePoster() {
    savedPosters.push(currentPoster);
  }
 }
+
 function displayMiniPosters() {
   collectionGrid.innerHTML = null
    for (var i = 0; i < savedPosters.length; i++) {
@@ -178,16 +189,18 @@ function displayMiniPosters() {
        </article>`
   }
 }
+
 function displaySaved() {
   savedToggle();
   displayMiniPosters();
 }
+
 function deleteSavedPoster() {
   var selectedID = event.target.closest(".mini-poster").id;
   for (var i = 0; i < savedPosters.length; i++) {
     if (savedPosters[i].id == selectedID) {
       savedPosters.splice(i, 1);
-      displayMini();
+      displayMiniPosters();
     }
   }
 }
