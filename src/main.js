@@ -116,8 +116,8 @@ var quotes = [
 var savedPosters = [];
 var currentPoster
 
-window.addEventListener('load', displayPoster);
-showRandomButton.addEventListener('click', displayPoster);
+window.addEventListener('load', displayRandomPoster);
+showRandomButton.addEventListener('click', displayRandomPoster);
 showFormButton.addEventListener('click', formToggle);
 showMainButton.addEventListener('click', formToggle);
 showMyPosterButton.addEventListener('click', showMyPoster);
@@ -150,7 +150,7 @@ function buildNewDisplay(poster) {
   quote.innerText = poster.quote;
 }
 
-function displayPoster() {
+function displayRandomPoster() {
  currentPoster = new Poster(images[getRandomIndex(images)], titles[getRandomIndex(titles)], quotes[getRandomIndex(quotes)]);
  buildNewDisplay(currentPoster);
 }
