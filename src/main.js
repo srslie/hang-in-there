@@ -157,20 +157,24 @@ function displayPoster() {
 
 function showMyPoster() {
   event.preventDefault()
+
   images.push(userURL.value);
   titles.push(userTitle.value);
   quotes.push(userQuote.value);
+
   currentPoster = new Poster(userURL.value, userTitle.value, userQuote.value)
+
   buildNewDisplay(currentPoster);
   formToggle();
 }
-
+ //.some to return if one of the posters has the id
 function savePoster() {
   var isNotSaved = true;
   if (savedPosters.length) {
     for (var i = 0; i < savedPosters.length; i++) {
       if (currentPoster.id === savedPosters[i].id) {
       isNotSaved = false;
+      break;
      }
    }
  }
@@ -201,6 +205,7 @@ function deleteSavedPoster() {
     if (savedPosters[i].id == selectedID) {
       savedPosters.splice(i, 1);
       displayMiniPosters();
+      break;
     }
   }
 }

@@ -1,6 +1,6 @@
 # Hang In There
 
-A boilerplate repo. 
+
 
 ## Set Up
 
